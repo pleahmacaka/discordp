@@ -6,10 +6,8 @@
 # js
 node_modules
 
-# prevent missed commit
-*.js
-*.map.js
+# secrets
+.env
 
 # output
-packages/*/build/*
-packages/*/.turbo/*
+build

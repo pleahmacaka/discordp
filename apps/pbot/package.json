@@ -1,0 +1,24 @@
+{
+  "name": "pbot",
+  "description": "discordp dev-bot, answers questions with Perplexity web search",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "author": "PleahMaCaka",
+  "license": "MIT",
+  "scripts": {
+    "start": "bun run src/start.ts",
+    "dev": "bun --watch src/start.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "ai": "^7.0.59",
+    "ai-sdk-pplx-agent": "^0.1.1",
+    "discord.js": "^14.27.0",
+    "discordp": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.3.14",
+    "typescript": "^7.0.2"
+  }
+}

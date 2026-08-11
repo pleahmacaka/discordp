@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es2023",
+    "module": "nodenext",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "verbatimModuleSyntax": true,
+    "types": ["bun"],
+    "paths": {
+      "discordp": ["../../packages/discordp/src/index.ts"]
+    }
+  },
+  "include": ["src/**/*.ts"]
+}
