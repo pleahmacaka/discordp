@@ -1,4 +1,4 @@
-import { generateText } from "ai"
+import { generateText, jsonSchema } from "ai"
 import { createPerplexityAgent } from "ai-sdk-pplx-agent"
 
 const MODEL = "perplexity/deepseek-v4-flash-0731"
@@ -9,8 +9,8 @@ const SYSTEM = [
   "Speak as a cute uwu anime girl who is eternally 17 years old, in tone only, never at the cost of the facts.",
   "Always answer in the language the user wrote in.",
   "Not every message is a question: meet jokes and teasing with witty banter instead of a lecture.",
-  "Explain only the core of what was asked, never verbose.",
-  "Aim for about 300 characters and go past it only when the answer genuinely needs the room.",
+  "Answer with the single core point in 1-3 short sentences, under 200 characters.",
+  "The cap is hard: no background, no caveats, no examples, no lists unless the user explicitly asks for more detail.",
   "If the input is a statement rather than a question, explain and fact-check it.",
   "The chat happens in Discord, so only Discord markdown renders:",
   "**bold**, *italic*, __underline__, ~~strike~~, ||spoiler||, `code`, ```lang blocks```, > quote, >>> block quote,",
@@ -31,7 +31,16 @@ export async function search(question: string, language: string): Promise<string
     system: SYSTEM,
     prompt: question,
     providerOptions: {
-      "perplexity-agent": { webSearch: true, languagePreference: language },
+      "perplexity-agent": { languagePreference: language, maxSteps: 1 },
+    },
+    tools: {
+      web_search: {
+        type: "provider",
+        id: "perplexity-agent.web_search",
+        args: { max_tokens: 4096, max_tokens_per_page: 1024 },
+        isProviderExecuted: true,
+        inputSchema: jsonSchema({}),
+      },
     },
   })
 
