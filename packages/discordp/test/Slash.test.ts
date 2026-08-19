@@ -1,5 +1,8 @@
 import { expect, test } from "bun:test"
-import { ApplicationCommandType, type ChatInputCommandInteraction } from "discord.js"
+import {
+  ApplicationCommandType,
+  type ChatInputCommandInteraction,
+} from "discord.js"
 import { MessageCommand } from "../src/decorators/MessageCommand.js"
 import { commandsOf } from "../src/decorators/registry.js"
 import { Slash } from "../src/decorators/Slash.js"
@@ -12,7 +15,7 @@ class ExampleCommand {
     return `${this.greeting} World!`
   }
 
-  @MessageCommand({ name: "질문하기" })
+  @MessageCommand({ name: "Ask about this" })
   async fromMessage() {
     return this.greeting
   }
@@ -22,7 +25,9 @@ test("decorated methods are collected and stay bound to their instance", async (
   const [slash] = commandsOf(new ExampleCommand())
 
   expect(slash?.name).toBe("example")
-  expect(await slash?.execute({} as ChatInputCommandInteraction)).toBe("Hello World!")
+  expect(await slash?.execute({} as ChatInputCommandInteraction)).toBe(
+    "Hello World!",
+  )
 })
 
 test("context menu commands carry no description", () => {
