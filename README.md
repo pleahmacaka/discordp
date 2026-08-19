@@ -12,22 +12,33 @@ Can use discord.js client and all function as is, DiscordP is just simple framew
 # 🚀 Usage
 
 ```ts
-import { ApplicationCommandOptionType, ApplicationIntegrationType, InteractionContextType } from "discord.js"
-import { Client, MessageCommand, Slash } from "discordp"
+import {
+  ApplicationCommandOptionType,
+  ApplicationIntegrationType,
+  InteractionContextType,
+} from "discord.js";
+import { Client, MessageCommand, Slash } from "discordp";
 
 class PingCommand {
   @Slash({
     name: "ping",
     description: "Pong!",
-    options: [{ name: "text", description: "echo", type: ApplicationCommandOptionType.String, required: true }]
+    options: [
+      {
+        name: "text",
+        description: "echo",
+        type: ApplicationCommandOptionType.String,
+        required: true,
+      },
+    ],
   })
   async execute(interaction: ChatInputCommandInteraction) {
-    await interaction.reply(interaction.options.getString("text", true))
+    await interaction.reply(interaction.options.getString("text", true));
   }
 
   @MessageCommand({ name: "Quote" })
   async quote(interaction: MessageContextMenuCommandInteraction) {
-    await interaction.reply(interaction.targetMessage.content)
+    await interaction.reply(interaction.targetMessage.content);
   }
 }
 
@@ -35,10 +46,14 @@ const client = new Client({
   intents: [],
   commands: [PingCommand],
   integrationTypes: [ApplicationIntegrationType.UserInstall],
-  contexts: [InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel]
-})
+  contexts: [
+    InteractionContextType.Guild,
+    InteractionContextType.BotDM,
+    InteractionContextType.PrivateChannel,
+  ],
+});
 
-await client.login(process.env.DISCORD_BOT_TOKEN)
+await client.login(process.env.DISCORD_BOT_TOKEN);
 ```
 
 Commands are deployed on `clientReady` and dispatched on `interactionCreate`, so a class listed in `commands` is all
