@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "start": "bun run src/start.ts",
-    "dev": "bun --watch src/start.ts",
+    "dev": "cd ../.. && bun --env-file=apps/pbot/.env --watch apps/pbot/src/start.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
