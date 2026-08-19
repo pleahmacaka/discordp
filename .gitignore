@@ -11,3 +11,6 @@ node_modules
 
 # output
 build
+
+# local databases
+data/
