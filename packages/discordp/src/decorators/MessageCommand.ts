@@ -1,4 +1,7 @@
-import { ApplicationCommandType, type MessageContextMenuCommandInteraction } from "discord.js"
+import {
+  ApplicationCommandType,
+  type MessageContextMenuCommandInteraction,
+} from "discord.js"
 import { collect } from "./registry.js"
 
 export interface MessageCommandInfo {
@@ -7,7 +10,10 @@ export interface MessageCommandInfo {
 
 export function MessageCommand(info: MessageCommandInfo) {
   return <This extends object>(
-    handler: (this: This, interaction: MessageContextMenuCommandInteraction) => unknown,
+    handler: (
+      this: This,
+      interaction: MessageContextMenuCommandInteraction,
+    ) => unknown,
     context: ClassMethodDecoratorContext<This>,
   ) => {
     context.addInitializer(function (this: This) {

@@ -1,4 +1,8 @@
-import { type ApplicationCommandOptionData, ApplicationCommandType, type ChatInputCommandInteraction } from "discord.js"
+import {
+  type ApplicationCommandOptionData,
+  ApplicationCommandType,
+  type ChatInputCommandInteraction,
+} from "discord.js"
 import { collect } from "./registry.js"
 
 export interface SlashInfo {

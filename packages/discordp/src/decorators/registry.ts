@@ -5,7 +5,9 @@ import type {
   MessageContextMenuCommandInteraction,
 } from "discord.js"
 
-export type CommandInteraction = ChatInputCommandInteraction | MessageContextMenuCommandInteraction
+export type CommandInteraction =
+  | ChatInputCommandInteraction
+  | MessageContextMenuCommandInteraction
 
 export interface Command {
   name: string

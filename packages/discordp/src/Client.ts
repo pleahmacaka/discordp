@@ -30,7 +30,9 @@ export class Client extends ClientJS {
 
   private readonly guild: string | undefined
 
-  private readonly integrationTypes: readonly ApplicationIntegrationType[] | undefined
+  private readonly integrationTypes:
+    | readonly ApplicationIntegrationType[]
+    | undefined
 
   private readonly contexts: readonly InteractionContextType[] | undefined
 
@@ -41,9 +43,11 @@ export class Client extends ClientJS {
     this.integrationTypes = options.integrationTypes
     this.contexts = options.contexts
 
-    for (const CommandClass of options.commands ?? [])
-      for (const command of commandsOf(new CommandClass()))
+    for (const CommandClass of options.commands ?? []) {
+      for (const command of commandsOf(new CommandClass())) {
         this.commands.set(`${command.type}:${command.name}`, command)
+      }
+    }
 
     this.once("clientReady", () => void this.onReady())
     this.on("interactionCreate", interaction => void this.dispatch(interaction))
@@ -58,7 +62,9 @@ export class Client extends ClientJS {
   private logInstallUrls(): void {
     const clientId = this.application?.id
 
-    if (!clientId) return
+    if (!clientId) {
+      return
+    }
 
     Logger.info(
       "Guild install:",
@@ -89,42 +95,67 @@ export class Client extends ClientJS {
 
     // context menu commands are rejected by the API when a description is sent
     return command.type === ApplicationCommandType.ChatInput
-      ? { ...base, type: command.type, description: command.description, options: command.options }
+      ? {
+          ...base,
+          type: command.type,
+          description: command.description,
+          options: command.options,
+        }
       : { ...base, type: command.type }
   }
 
   private async deploy(): Promise<void> {
     const commands = this.application?.commands
 
-    if (!commands) return
+    if (!commands) {
+      return
+    }
 
-    const body = [...this.commands.values()].map(command => this.toCommandData(command))
+    const body = [...this.commands.values()].map(command =>
+      this.toCommandData(command),
+    )
 
     try {
       await (this.guild ? commands.set(body, this.guild) : commands.set(body))
 
-      Logger.info(`Deployed ${body.length} command(s)${this.guild ? ` to guild ${this.guild}` : " globally"}`)
+      Logger.info(
+        `Deployed ${body.length} command(s)${this.guild ? ` to guild ${this.guild}` : " globally"}`,
+      )
     } catch (error) {
       Logger.critical("Failed to deploy commands:", error)
     }
   }
 
   private async dispatch(interaction: Interaction): Promise<void> {
-    if (!interaction.isChatInputCommand() && !interaction.isMessageContextMenuCommand()) return
+    if (
+      !interaction.isChatInputCommand() &&
+      !interaction.isMessageContextMenuCommand()
+    ) {
+      return
+    }
 
-    const command = this.commands.get(`${interaction.commandType}:${interaction.commandName}`)
+    const command = this.commands.get(
+      `${interaction.commandType}:${interaction.commandName}`,
+    )
 
-    if (!command) return
+    if (!command) {
+      return
+    }
 
     try {
       await command.execute(interaction)
     } catch (error) {
       Logger.error(`Command "${interaction.commandName}" failed:`, error)
 
-      if (interaction.replied || interaction.deferred) return
+      if (interaction.replied || interaction.deferred) {
+        return
+      }
 
       await interaction
-        .reply({ content: "Something went wrong.", flags: MessageFlags.Ephemeral })
+        .reply({
+          content: "Something went wrong.",
+          flags: MessageFlags.Ephemeral,
+        })
         .catch(() => undefined)
     }
   }
