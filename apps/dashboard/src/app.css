@@ -1,0 +1,14 @@
+@import 'tailwindcss';
+
+@plugin "daisyui" {
+	themes: business --default;
+}
+
+:root {
+	--log-font: ui-monospace, 'Cascadia Code', 'Segoe UI Mono', monospace;
+}
+
+.log-mono {
+	font-family: var(--log-font);
+	font-variant-numeric: tabular-nums;
+}

@@ -16,8 +16,8 @@
     "typecheck": "bun run --filter '*' typecheck",
     "lint": "biome check .",
     "format": "biome check --write .",
-    "dev": "bun --cwd apps/pbot --watch src/start.ts",
-    "start": "bun --cwd apps/pbot src/start.ts"
+    "dev": "bun run --filter '*' dev",
+    "start": "bun run --filter '*' start"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.7",

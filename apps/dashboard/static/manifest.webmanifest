@@ -1,0 +1,19 @@
+{
+  "name": "PBOT 대시보드",
+  "short_name": "PBOT",
+  "description": "PBOT 텔레메트리 로그와 사용 통계",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#1c1917",
+  "theme_color": "#1c1917",
+  "lang": "ko",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
